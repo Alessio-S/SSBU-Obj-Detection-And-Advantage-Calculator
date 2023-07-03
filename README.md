@@ -13,17 +13,16 @@ To train the model, I run a script on an MP4 file that converts it to a list of 
 Please refer to the [Official Tensorflow Installation Guide](https://www.tensorflow.org/install) to avoid any compatibility issues.
 I am curently running on `Tensorflow 2.12.3` with `Keras 2.12.0` and `Python 3.10.6`. I am using `pip 23.1.2` to install the needed packages.
 Here is a full list of packages you may need to install/upgrade using `pip`:
-```pip install tensorflow (also installs keras & tensorboard)```
-```pip install protobuf```
-```pip install opencv-python```
-```pip install numpy```
-```pip install pandas```
-```pip install model-lib```
-```pip install grpcio```
-```pip install grpcio-tools```
+`pip install tensorflow (also installs keras & tensorboard)`
+`pip install protobuf`
+`pip install opencv-python`
+`pip install numpy`
+`pip install pandas`
+`pip install model-lib`
+`pip install grpcio`
+`pip install grpcio-tools`
 
 (Optional)
 ```pip install virtualenv (to isolate your pip packages and depencies)```
-```
 
 ## Usage
