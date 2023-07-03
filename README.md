@@ -46,7 +46,7 @@ pip install virtualenv # To isolate your pip packages and depencies
 ```
 
 ## Contents
-`my_model/pipeline.config` - intializes the parameters for training the model with TF 2
+`my_model/pipeline.config` - Intializes the parameters for training the model with TF 2
 
 `my_model/saved_model/saved_model.pb` - The exported model after it has been trained on the images set
 
@@ -54,7 +54,10 @@ pip install virtualenv # To isolate your pip packages and depencies
 
 `scripts/create_label_map.py` - Script to create the *label_map* file
 
-`scripts/JsonToTFrecord.py` - Takes the '.json' files output from the VGG Image Annotator and turns them into '.tfrecord' files. Data is stored separately for each bounding box, so the .tfrecord files grow quite large based on how many bounding boxes are used per image.
+`scripts/create_test_data.py` - Script to transform an MP4 video to a list of images
+
+`scripts/JsonToTFrecord.py` - Takes the '.json' files output from the VGG Image Annotator and turns them into '.tfrecord' files.
+Data is stored separately for each bounding box, so the .tfrecord files grow quite large based on how many bounding boxes are used per image.
 
 `scripts/eval_model.py` - Run this script on an image folder to test the model on those images and save the resultant annotated images
 
@@ -146,14 +149,22 @@ ${YOUR_PYTHON_VERSION} exporter_main_v2.py
 #### Evaluate the model
 1. *Create the data* you want to test the AI on
 ```
-${YOUR_PYTHON_VERSION} create_test_data.py --MP4Path path/to/your/video --OutputDir dir/for/resultant/images --ImgInterval (0,inf)
+${YOUR_PYTHON_VERSION} create_test_data.py --MP4Path path/to/your/video
+                                           --OutputDir dir/for/resultant/images
+                                           --ImgInterval (0,inf)
 ```
 2. *Test the data and save* the resultant images
 ```
-${YOUR_PYTHON_VERSION} eval_model.py --InputImageDir dir/for/the/input/images --OutImgDir dir/for/annotated/images
+${YOUR_PYTHON_VERSION} eval_model.py --InputImageDir dir/for/the/input/images
+                                     --OutImgDir dir/for/annotated/images
 ```
 
 ## Limitations
 As of this first version, the AI has only been trained to identify up to two characters, which it does quite poorly, due to a lack of training data.
-However, the algorhythm to calculate the positional advantage works really good, as long as the AI finds the characters and not some false positive.
+However, the algorhythm to calculate the positional advantage works really good, as long as the AI finds the characters and not some false positives.
 
+## Updates & Contributions
+Everyone is welcome to take this code and upgrade it, use it another project, or add data to further train this model.
+
+## Credits
+I would like to thank **Matthew Tafazoli** and his [SSBM-Custom-Object-Detection](https://github.com/MatthewTafazoli/SSBM-Custom-Object-Detection), which was a great help in understaning how Tensorflow's API works, and his code that served as a base to build upon (and effectively test) my algorhythm.
