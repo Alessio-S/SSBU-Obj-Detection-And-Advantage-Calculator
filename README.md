@@ -97,13 +97,13 @@ cd scripts/
 2. Convert the *.json file* to a *.tfrecord file*
 ```
 ${YOUR_PYTHON_VERSION} JsonToTFrecord.py
-  --ImgInputDir dir/of/images/used/for/annotations
-  --JsonFile path/to/json/file
-  --OutputDir path/where/tfrecord/file/will/be/saved
-  --OutName "Name of the .tfrecord file"
-  --CategoryName "Name of the category used for annotations"
-  --train_val_ratio (0, inf) # Ratio for making the .tfrecord file
-      (ex: for 0.5 -> only half of the .json file items will be converted)
+  --ImgInputDir                  dir/of/images/used/for/annotations
+  --JsonFile                     path/to/json/file
+  --OutputDir                    path/where/tfrecord/file/will/be/saved
+  --OutName                     "Name of the .tfrecord file"
+  --CategoryName                "Name of the category used for annotations"
+  --train_val_ratio (0, inf)    #Ratio for making the .tfrecord file
+                                 (ex: for 0.5 -> only half of the .json file items will be converted)
 ```
 3. Create your *label_map file* with *create_label_map.py*
 ```
