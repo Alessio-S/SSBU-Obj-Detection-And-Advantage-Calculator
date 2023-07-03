@@ -15,7 +15,7 @@ Please refer to the [Official Tensorflow Installation Guide](https://www.tensorf
 I am curently running on `Tensorflow 2.12.3` with `Keras 2.12.0` and `Python 3.10.6`. I am using `pip 23.1.2` to install the needed packages.
 Here is a full list of packages you may need to install/upgrade using `pip`:
 ```
-pip install tensorflow (also installs keras & tensorboard)
+pip install tensorflow # Also installs keras & tensorboard
 ```
 ```
 pip install protobuf
@@ -41,7 +41,26 @@ pip install grpcio-tools
 
 (Optional)
 ```
-pip install virtualenv (to isolate your pip packages and depencies)
+pip install virtualenv # To isolate your pip packages and depencies
 ```
+
+## Contents
+`my_model/pipeline.config` - intializes the parameters for training the model with TF 2
+
+`my_model/saved_model/saved_model.pb` - The exported model after it has been trained on the images set
+
+`annotations/label_map.pbtxt` - Label map file listing your class names paired with a unique index, necessary for *pipeline.config*
+
+`scripts/create_label_map.py` - Script to create the *label_map* file
+
+`scripts/JsonToTFrecord.py` - Takes the '.json' files output from the VGG Image Annotator and turns them into '.tfrec' files. Data is stored separately for each bounding box, so the .tfrec files grow quite large based on how many bounding boxes are used per image.
+
+`scripts/evaluatemodel.py` - Run this script on an image folder to test the model on those images and save the resultant annotated images
+
+`scripts/exporter_main_v2.py` - Official code from Tensorflow 2 for exporting the model after completing training
+
+`scripts/model_main_tf2.py` - Official code from Tensorflow 2 for training the model on their Custom Object Detection
+
+`scripts/testtfrec.py` - Tests the content of the '.tfrec' files you output from
 
 ## Usage
