@@ -8,7 +8,7 @@ The model I trained lacks a large amount of data to work properly, so I used [Ma
 
 ![Peach-Fox Advantage Calulator](/assets/Peach-Fox_adv_ex.jpg)
 
-To train the model, I run a script on an MP4 file that converts it to a list of images. I then annotate every image using [VGG Image Annotator](https://www.robots.ox.ac.uk/~vgg/software/via/) which I then export as a single .json file. Using another script, I convert the .json file in a .tfrec file to train the model with, in the [my_model/pipeline.config](my_model/pipeline.config) file, required by Tensorflow's 2.0 API.
+To train the model, I run a script on an MP4 file that converts it to a list of images. I then annotate every image using [VGG Image Annotator](https://www.robots.ox.ac.uk/~vgg/software/via/) which I then export as a single .json file. Using another script, I convert the .json file in a .tfrecord file to train the model with, in the [my_model/pipeline.config](my_model/pipeline.config) file, required by Tensorflow's 2.0 API.
 
 ## Installation
 Please refer to the [Official Tensorflow Installation Guide](https://www.tensorflow.org/install) to avoid any compatibility issues.
@@ -54,18 +54,19 @@ pip install virtualenv # To isolate your pip packages and depencies
 
 `scripts/create_label_map.py` - Script to create the *label_map* file
 
-`scripts/JsonToTFrecord.py` - Takes the '.json' files output from the VGG Image Annotator and turns them into '.tfrec' files. Data is stored separately for each bounding box, so the .tfrec files grow quite large based on how many bounding boxes are used per image.
+`scripts/JsonToTFrecord.py` - Takes the '.json' files output from the VGG Image Annotator and turns them into '.tfrecord' files. Data is stored separately for each bounding box, so the .tfrecord files grow quite large based on how many bounding boxes are used per image.
 
-`scripts/evaluatemodel.py` - Run this script on an image folder to test the model on those images and save the resultant annotated images
+`scripts/eval_model.py` - Run this script on an image folder to test the model on those images and save the resultant annotated images
 
 `scripts/exporter_main_v2.py` - Official code from Tensorflow 2 for exporting the model after completing training
 
 `scripts/model_main_tf2.py` - Official code from Tensorflow 2 for training the model on their Custom Object Detection
 
-`scripts/testtfrec.py` - Tests the content of the '.tfrec' files you output from
+`scripts/testtfrec.py` - Tests the content of the '.tfrecord' files you output from
 
 ## Usage
-If you've already added the models directories as a permanent environment variables, skip steps 1. to 4.
+
+### If you've already added the models directories as a permanent environment variables, skip steps 1. to 4.
 
 1. Clone the *Tensorflow models repository* from GitHub
 ```
@@ -75,7 +76,7 @@ git clone https://github.com/tensorflow/models.git
 ```
 cd models/research/
 ```
-3. Compile the Protobufs
+3. Compile the *Protobufs*
 ```
 protoc object_detection/protos/*.proto --python_out=.
 ```
@@ -83,4 +84,54 @@ protoc object_detection/protos/*.proto --python_out=.
 ```
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 ```
-5. 
+
+5. Navigate to the *scripts directory*
+```
+cd scripts/
+```
+
+### Train the model
+
+1. Get the *.json file* for the annotations
+   
+2. Convert the *.json file* to a *.tfrecord file*
+```
+${YOUR_PYTHON_VERSION} JsonToTFrecord.py
+  --ImgInputDir dir/of/images/used/for/annotations
+  --JsonFile path/to/json/file
+  --OutputDir path/where/tfrecord/file/will/be/saved
+  --OutName "Name of the .tfrecord file"
+  --CategoryName "Name of the category used for annotations"
+  --train_val_ratio (0, inf) # Ratio for making the .tfrecord file (ex: for 0.5 -> only half of the .json file items will be converted)
+```
+3. Modify the *my_model/pipeline.config* file as per your needs
+```
+[...]
+train_input_reader {
+  label_map_path: "path/to/your/label_map_file"
+  tf_record_input_reader {
+    input_path: "${YOUR_TFRECORD_FILE_NAME}_train.tfrecord"
+  }
+}
+[...]
+eval_input_reader {
+  label_map_path: "path/to/your/label_map_file"
+  shuffle: false
+  num_epochs: 1
+  tf_record_input_reader {
+    input_path: "${YOUR_TFRECORD_FILE_NAME}_val.tfrecord"
+  }
+}
+```
+4. *Train* the model with the *.tfrecord file*
+```
+${YOUR_PYTHON_VERSION} model_main_tf2.py
+```
+5. Repeat steps 2. to 4.
+
+### Evaluate the model
+1. *Create the data* you want to test the AI on
+```
+${YOUR_PYTHON_VERSION} create_test_data.py --MP4Path path/to/your/video --OutputDir dir/for/resultant/images/ --ImgInterval (0,inf)
+```
+8. Annot
