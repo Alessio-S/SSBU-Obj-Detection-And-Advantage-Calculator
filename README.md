@@ -17,19 +17,26 @@ I am curently running on `Tensorflow 2.12.3` with `Keras 2.12.0` and `Python 3.1
 Here is a full list of packages you may need to install/upgrade using `pip`:
 ```
 pip install tensorflow # Also installs keras & tensorboard
-``` ```
+```
+```
 pip install protobuf
-``` ```
+```
+```
 pip install opencv-python
-``` ```
+```
+```
 pip install numpy
-``` ```
+```
+```
 pip install pandas
-```  ```
+```
+```
 pip install model-lib
-``` ```
+```
+```
 pip install grpcio
-``` ```
+```
+```
 pip install grpcio-tools
 ```
 
