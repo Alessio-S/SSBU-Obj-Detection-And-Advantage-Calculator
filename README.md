@@ -66,7 +66,7 @@ pip install virtualenv # To isolate your pip packages and depencies
 
 ## Usage
 
-### If you've already added the models directories as a permanent environment variables, skip steps 1. to 4.
+#### If you've already added the models directories as permanent environment variables, skip steps 1. to 4.
 
 1. Clone the *Tensorflow models repository* from GitHub
 ```
