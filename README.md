@@ -13,29 +13,23 @@ To train the model, I run a script on an MP4 file that converts it to a list of 
 ## Installation
 Please refer to the [Official Tensorflow Installation Guide](https://www.tensorflow.org/install) to avoid any compatibility issues.
 I am curently running on `Tensorflow 2.12.3` with `Keras 2.12.0` and `Python 3.10.6`. I am using `pip 23.1.2` to install the needed packages.
+
 Here is a full list of packages you may need to install/upgrade using `pip`:
 ```
 pip install tensorflow # Also installs keras & tensorboard
-```
-```
+``` ```
 pip install protobuf
-```
-```
+``` ```
 pip install opencv-python
-```
-```
+``` ```
 pip install numpy
-```
-```
+``` ```
 pip install pandas
-``` 
-```
+```  ```
 pip install model-lib
-```
-```
+``` ```
 pip install grpcio
-```
-```
+``` ```
 pip install grpcio-tools
 ```
 
@@ -64,3 +58,22 @@ pip install virtualenv # To isolate your pip packages and depencies
 `scripts/testtfrec.py` - Tests the content of the '.tfrec' files you output from
 
 ## Usage
+If you've already added the models directories as a permanent environment variables, skip steps 1. to 4.
+
+1. Clone the *Tensorflow models repository* from GitHub
+```
+git clone https://github.com/tensorflow/models.git
+```
+2. Navigate to the */models/research* directory
+```
+cd models/research/
+```
+3. Compile the Protobufs
+```
+protoc object_detection/protos/*.proto --python_out=.
+```
+4. Add the */models/research* and */models/research/slim* directories to your *PYTHONPATH* environment variable
+```
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+```
+5. 
