@@ -90,7 +90,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 cd scripts/
 ```
 
-### Train the model
+#### Train the model
 
 1. Get the *.json file* for the annotations
    
@@ -102,9 +102,18 @@ ${YOUR_PYTHON_VERSION} JsonToTFrecord.py
   --OutputDir path/where/tfrecord/file/will/be/saved
   --OutName "Name of the .tfrecord file"
   --CategoryName "Name of the category used for annotations"
-  --train_val_ratio (0, inf) # Ratio for making the .tfrecord file (ex: for 0.5 -> only half of the .json file items will be converted)
+  --train_val_ratio (0, inf) # Ratio for making the .tfrecord file
+      (ex: for 0.5 -> only half of the .json file items will be converted)
 ```
-3. Modify the *my_model/pipeline.config* file as per your needs
+3. Create your *label_map file* with *create_label_map.py*
+```
+[...]
+label_map = convert_classes(['Lucina', 'Roy'])          # Modify as per the classes you want
+output_path = "../annotations/"                         # Place where the label_map file will be saved
+with open(output_path + "label_map.pbtxt", "w") as f:   # You can change the name here
+    [...]
+```
+4. Modify the *my_model/pipeline.config* file as per your needs
 ```
 [...]
 train_input_reader {
@@ -123,15 +132,28 @@ eval_input_reader {
   }
 }
 ```
-4. *Train* the model with the *.tfrecord file*
+5. Train the model with the *.tfrecord file*
 ```
 ${YOUR_PYTHON_VERSION} model_main_tf2.py
 ```
-5. Repeat steps 2. to 4.
+6. Repeat steps 2. to 5.
 
-### Evaluate the model
+#### Export your trained model
+```
+${YOUR_PYTHON_VERSION} exporter_main_v2.py
+```
+
+#### Evaluate the model
 1. *Create the data* you want to test the AI on
 ```
-${YOUR_PYTHON_VERSION} create_test_data.py --MP4Path path/to/your/video --OutputDir dir/for/resultant/images/ --ImgInterval (0,inf)
+${YOUR_PYTHON_VERSION} create_test_data.py --MP4Path path/to/your/video --OutputDir dir/for/resultant/images --ImgInterval (0,inf)
 ```
-8. Annot
+2. *Test the data and save* the resultant images
+```
+${YOUR_PYTHON_VERSION} eval_model.py --InputImageDir dir/for/the/input/images --OutImgDir dir/for/annotated/images
+```
+
+## Limitations
+As of this first version, the AI has only been trained to identify up to two characters, which it does quite poorly, due to a lack of training data.
+However, the algorhythm to calculate the positional advantage works really good, as long as the AI finds the characters and not some false positive.
+
