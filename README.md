@@ -2,7 +2,7 @@
 **Custom Object Detection** for Super Smash Bros. Ultimate (using TensorFlow 2) & positional **Advantage Calculator**.
 
 ## About
-I have trained a Deep Learning AI, using [Tensorflow's 2.0 Custom Object Detection API](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2.md), to identify and locate Super Smash Bros. Ultimate Characters from a video source, and use the data to calculate the relative positional advantage (in %) of one character to the other(s).
+I have trained a Deep Learning AI, using [Tensorflow's 2.0 Custom Object Detection API](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2.md), to identify and locate Super Smash Bros. Ultimate Characters from a video source, and use the data to calculate the relative positional advantage (in %) of one character relative to the other(s).
 
 The model I trained lacks a large amount of data to work properly, so I used [Matthew Tafazoli's SSBM-Custom-Object-Detection](https://github.com/MatthewTafazoli/SSBM-Custom-Object-Detection) model, well trained to identify characters in Super Smash Bros. Melee, as a base to try the positional advantage calculator. Here is an output example:
 
@@ -56,8 +56,8 @@ pip install virtualenv # To isolate your pip packages and depencies
 
 `scripts/create_test_data.py` - Script to transform an MP4 video to a list of images
 
-`scripts/JsonToTFrecord.py` - Takes the '.json' files output from the VGG Image Annotator and turns them into '.tfrecord' files.
-Data is stored separately for each bounding box, so the .tfrecord files grow quite large based on how many bounding boxes are used per image.
+`scripts/JsonToTFrecord.py` - Takes the '.json' file output from the VGG Image Annotator and turns it into a '.tfrecord' file.
+Data is stored separately for each bounding box, so the .tfrecord file grows quite large based on how many bounding boxes are used per image.
 
 `scripts/eval_model.py` - Run this script on an image folder to test the model on those images and save the resultant annotated images
 
@@ -65,7 +65,7 @@ Data is stored separately for each bounding box, so the .tfrecord files grow qui
 
 `scripts/model_main_tf2.py` - Official code from Tensorflow 2 for training the model on their Custom Object Detection
 
-`scripts/testtfrec.py` - Tests the content of the '.tfrecord' files you output from
+`scripts/testtfrec.py` - Tests the content of the '.tfrecord' file
 
 ## Usage
 
