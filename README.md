@@ -12,7 +12,7 @@ To train the model, I run a script on an MP4 file that converts it to a list of 
 
 ## Installation
 Please refer to the [Official Tensorflow Installation Guide](https://www.tensorflow.org/install) to avoid any compatibility issues.
-I am curently running on `Tensorflow 2.12.3` with `Keras 2.12.0` and `Python 3.10.6`. I am using `pip 23.1.2` to install the needed packages.
+I am running on the current latest versions of `Tensorflow 2.12.3` with `Keras 2.12.0` and `Python 3.10.6`. I am using `pip 23.1.2` to install the needed packages.
 
 Here is a full list of packages you may need to install/upgrade using `pip`:
 ```
@@ -52,7 +52,7 @@ pip install virtualenv # To isolate your pip packages and depencies
 
 `annotations/label_map.pbtxt` - Label map file listing your class names paired with a unique index, necessary for *pipeline.config*
 
-`scripts/create_label_map.py` - Script to create the *label_map* file
+`scripts/create_label_map.py` - Script to create the *label_map file*
 
 `scripts/create_test_data.py` - Script to transform an MP4 video to a list of images
 
@@ -152,6 +152,7 @@ ${YOUR_PYTHON_VERSION} exporter_main_v2.py
 ${YOUR_PYTHON_VERSION} create_test_data.py --MP4Path path/to/your/video
                                            --OutputDir dir/for/resultant/images
                                            --ImgInterval (0,inf)
+                                             (ex: for 0.5 -> one image will be taken every 0.5s, so 2 img/s)
 ```
 2. *Test the data and save* the resultant images
 ```
